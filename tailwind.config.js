@@ -1,10 +1,11 @@
 module.exports = {
   content: [
-    "./index.html",
-    "./src/**/*.{vue,js,ts,jsx,tsx}",
+    './index.html',
+    './src/**/*.{vue,js,ts,jsx,tsx}',
   ],
   theme: {
     extend: {},
   },
-  plugins: [require("@tailwindcss/forms")],
-}
+  // eslint-disable-next-line global-require
+  plugins: [require('@tailwindcss/forms')],
+};
