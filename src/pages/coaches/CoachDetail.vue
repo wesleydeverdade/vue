@@ -6,7 +6,6 @@
         <h3>${{ rate }}/hour</h3>
       </base-card>
     </section>
-
     <section>
       <base-card>
         <header>
@@ -16,16 +15,9 @@
         <router-view></router-view>
       </base-card>
     </section>
-
     <section>
       <base-card>
-        <base-badge
-          v-for="area in areas"
-          :key="area"
-          :title="area"
-          :type="area"
-        ></base-badge>
-
+        <base-badge v-for="area in areas" :key="area" :type="area" :title="area"></base-badge>
         <p>{{ description }}</p>
       </base-card>
     </section>
@@ -42,7 +34,7 @@ export default {
   },
   computed: {
     fullName() {
-      return `${this.selectedCoach.firstName} ${this.selectedCoach.lastName}`;
+      return this.selectedCoach.firstName + ' ' + this.selectedCoach.lastName;
     },
     areas() {
       return this.selectedCoach.areas;
@@ -54,13 +46,12 @@ export default {
       return this.selectedCoach.description;
     },
     contactLink() {
-      return `${this.$route.path}/${this.id}/contact`;
+      return this.$route.path + '/' + this.id + '/contact';
     },
   },
   created() {
-    console.log(this.id);
     this.selectedCoach = this.$store.getters['coaches/coaches'].find(
-      (coach) => (coach.id === this.id),
+      (coach) => coach.id === this.id
     );
   },
 };

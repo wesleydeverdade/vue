@@ -13,20 +13,20 @@ export default {
     mode: {
       type: String,
       required: false,
-      default: null,
+      default: null
     },
     link: {
       type: Boolean,
       required: false,
-      default: false,
+      default: false
     },
     to: {
       type: String,
       required: false,
-      default: '/',
-    },
-  },
-};
+      default: '/'
+    }
+  }
+}
 </script>
 
 <style scoped>
@@ -60,8 +60,8 @@ button:active {
 
 .outline {
   background-color: transparent;
+  border-color: #270041;
   color: #270041;
-  border: 1px;
 }
 
 .flat:hover,
