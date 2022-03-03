@@ -3,13 +3,13 @@
     <h2>Find your coach</h2>
     <span class="filter-option">
       <input type="checkbox" id="frontend" checked @change="setFilter" />
-      <label for="frontend">Front-End</label>
+      <label for="frontend" class="space-item-checkbox">Front-End</label>
 
       <input type="checkbox" id="backend" checked @change="setFilter" />
-      <label for="backend">Back-End</label>
+      <label for="backend" class="space-item-checkbox">Back-End</label>
 
       <input type="checkbox" id="career" checked @change="setFilter" />
-      <label for="career">Career</label>
+      <label for="career" class="space-item-checkbox">Career</label>
     </span>
   </base-card>
 </template>
@@ -62,5 +62,9 @@ h2 {
 
 .filter-option.active label {
   font-weight: bold;
+}
+
+.space-item-checkbox {
+  margin-right: 10px;
 }
 </style>

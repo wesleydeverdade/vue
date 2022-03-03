@@ -1,3 +1,5 @@
+/* eslint-disable guard-for-in */
+/* eslint-disable no-restricted-syntax */
 export default {
   async contactCoach(context, payload) {
     const newRequest = {

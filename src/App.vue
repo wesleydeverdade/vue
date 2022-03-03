@@ -1,11 +1,16 @@
 <template>
   <div>
-    <the-header></the-header>
-    <router-view v-slot="slotProps">
-      <transition name="route" mode="out-in">
-        <component :is="slotProps.Component"></component>
-      </transition>
-    </router-view>
+    <div class="loading-center-page" v-if="isLoading">
+      <base-spinner></base-spinner>
+    </div>
+    <div v-else>
+      <the-header></the-header>
+      <router-view v-slot="slotProps">
+        <transition name="route" mode="out-in">
+          <component :is="slotProps.Component"></component>
+        </transition>
+      </router-view>
+    </div>
   </div>
 </template>
 
@@ -16,19 +21,30 @@ export default {
   components: {
     TheHeader,
   },
+  data() {
+    return {
+      isLoading: true,
+    };
+  },
   computed: {
     didAutoLogout() {
       return this.$store.getters.didAutoLogout;
     },
   },
   created() {
-    this.$store.dispatch('autoLogin');
+    this.checkLogin();
   },
   watch: {
     didAutoLogout(curValue, oldValue) {
       if (curValue && curValue !== oldValue) {
         this.$router.replace('/coaches');
       }
+    },
+  },
+  methods: {
+    async checkLogin() {
+      await this.$store.dispatch('autoLogin');
+      this.isLoading = false;
     },
   },
 };
@@ -71,5 +87,13 @@ body {
 .route-leave-from {
   opacity: 1;
   transform: translateY(0);
+}
+
+.loading-center-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 </style>

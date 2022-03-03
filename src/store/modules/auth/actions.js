@@ -43,7 +43,6 @@ export default {
     const expirationDate = new Date().getTime() + expiresIn;
 
     localStorage.setItem('token', responseData.idToken);
-    localStorage.setItem('userId', responseData.localId);
     localStorage.setItem('tokenExpiration', expirationDate);
 
     timer = setTimeout(() => {
@@ -55,16 +54,35 @@ export default {
       userId: responseData.localId,
     });
   },
-  autoLogin(context) {
+  async autoLogin(context) {
     const token = localStorage.getItem('token');
-    const userId = localStorage.getItem('userId');
     const tokenExpiration = localStorage.getItem('tokenExpiration');
+
+    if (!token) {
+      return;
+    }
 
     const expiresIn = +tokenExpiration - new Date().getTime();
 
     if (expiresIn < 0) {
       return;
     }
+
+    const response = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyBZD-qx9nIn2EHXuoaG53_zg0wh7QlwmKU', {
+      method: 'POST',
+      body: JSON.stringify({
+        idToken: token,
+      }),
+    });
+
+    const responseData = await response.json();
+
+    if (!response.ok) {
+      const error = new Error(responseData.message || 'Failed to refresh token.');
+      throw error;
+    }
+
+    const userId = responseData.users[0].localId;
 
     timer = setTimeout(() => {
       context.dispatch('autoLogout');
@@ -79,7 +97,6 @@ export default {
   },
   async logout(context) {
     localStorage.removeItem('token');
-    localStorage.removeItem('userId');
     localStorage.removeItem('tokenExpiration');
 
     clearTimeout(timer);

@@ -90,7 +90,6 @@ export default {
           });
         }
         const redirectUrl = `/${this.$route.query.redirect || 'coaches'}`;
-        console.log('redirectUrl', redirectUrl);
         this.$router.replace(redirectUrl);
       } catch (err) {
         this.error = err.message || 'Failed to authenticate, try later.';

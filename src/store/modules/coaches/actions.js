@@ -1,3 +1,5 @@
+/* eslint-disable guard-for-in */
+/* eslint-disable no-restricted-syntax */
 export default {
   async registerCoach(context, data) {
     const { userId } = context.rootGetters;
